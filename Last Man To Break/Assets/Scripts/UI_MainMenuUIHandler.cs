@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_MainMenuUIHandler : MonoBehaviour
+using Photon.Pun;
+
+public class UI_MainMenuUIHandler : MonoBehaviourPunCallbacks
 {
 
 #region UI Element References
@@ -35,6 +37,11 @@ public class UI_MainMenuUIHandler : MonoBehaviour
 public void Reconnect()
 {
     launcher.Connect();
+}
+
+public void GoToLobby()
+{
+    PhotonNetwork.LoadLevel("Lobby");
 }
 
 #endregion
