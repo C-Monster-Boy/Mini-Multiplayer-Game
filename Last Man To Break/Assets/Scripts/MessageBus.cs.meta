@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 425f51fbb5118fc4f96d27da74baae47
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - mesagePrefab: {fileID: 5835657982467406653, guid: f23c1d8b756f9c34d949ac89ac5e98e7, type: 3}
+  - disconnected: {fileID: 11400000, guid: 7a7fcac74e38c504194238fec6074f83, type: 2}
+  - connecting: {fileID: 11400000, guid: 96196c121f9cff8408f784afa11d3088, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -55,7 +55,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     {
         Debug.LogError($"OnDisconnected() was called by pun {cause}");
 
-        PhotonNetwork.LoadLevel("MainMenu");
+        MessageBus.Instance.AddMessageToQueue(MessageType.Disconnected);
     }
 
     public override void OnCreatedRoom()

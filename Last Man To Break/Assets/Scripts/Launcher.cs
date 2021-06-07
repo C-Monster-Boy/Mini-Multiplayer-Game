@@ -69,6 +69,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         Debug.LogError($"OnDisconnected() was called by pun {cause}");
 
         connectionState = ConnectionState.Disconnected;
+
+        MessageBus.Instance.AddMessageToQueue(MessageType.Disconnected);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
