@@ -62,7 +62,8 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     {
         roomNumberTry = 0;
         lobbyStatus = LobbyStatus.Connected;
-
+        
+        Debug.Log("Room Created");
         //TODO: Load New Scene
     }
 
@@ -75,6 +76,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
         }
         else
         {
+            Debug.Log("Create room failed");
             roomNumberTry = 0;
             lobbyStatus = LobbyStatus.Failed;
         }
@@ -82,12 +84,14 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
+        Debug.Log("Room Joined");
         lobbyStatus = LobbyStatus.Connected;
         //TOOD: Load New Scene
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        Debug.Log("Join Room Failed");
         lobbyStatus = LobbyStatus.Failed;
     }
 
