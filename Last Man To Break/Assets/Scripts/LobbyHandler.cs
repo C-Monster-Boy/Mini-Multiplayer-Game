@@ -4,13 +4,16 @@ using UnityEngine;
 
 using Photon.Pun;
 using Photon.Realtime;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class LobbyHandler : MonoBehaviourPunCallbacks
 {
 
 #region Private Variables
-    private const int MAX_PLAYERS_IN_A_ROOM = 2;
+    private const int MAX_PLAYERS_IN_A_ROOM = 3;
     private const int ROOM_NMBER_TRY_LIMIT = 21;
+
+    private const string MATCHMAKING_LEVEL_NAME = "Matchmaking";
     private int roomNumberTry = 0;
 #endregion
 
@@ -44,7 +47,20 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     public void CreateRoom()
     {
         lobbyStatus = LobbyStatus.Joining;
-        PhotonNetwork.CreateRoom($"Room {roomNumberTry}", new RoomOptions { MaxPlayers = MAX_PLAYERS_IN_A_ROOM});
+
+        RoomOptions roomOptions  = new RoomOptions()
+        {
+            MaxPlayers =  MAX_PLAYERS_IN_A_ROOM
+        };
+
+        //Custom Room Properties
+        Hashtable RoomCustomProps = new Hashtable();
+        RoomCustomProps.Add("map", 0); //map index has to be shared
+
+        roomOptions.CustomRoomProperties = RoomCustomProps;
+
+
+        PhotonNetwork.CreateRoom($"Room {roomNumberTry}", roomOptions);
     }
 
 #endregion
@@ -64,7 +80,8 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
         lobbyStatus = LobbyStatus.Connected;
         
         Debug.Log("Room Created");
-        //TODO: Load New Scene
+
+        LoadMatchmakingMenu();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -77,6 +94,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
         else
         {
             Debug.Log("Create room failed");
+            MessageBus.Instance.AddMessageToQueue(MessageType.CreateRoomFailed);
             roomNumberTry = 0;
             lobbyStatus = LobbyStatus.Failed;
         }
@@ -86,11 +104,15 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     {
         Debug.Log("Room Joined");
         lobbyStatus = LobbyStatus.Connected;
-        //TOOD: Load New Scene
+        
+        //PhotonNetwork.AutomaticallySyncScene = true;
+        LoadMatchmakingMenu();
+        
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
+        MessageBus.Instance.AddMessageToQueue(MessageType.JoinRoomFailed);
         Debug.Log("Join Room Failed");
         lobbyStatus = LobbyStatus.Failed;
     }
@@ -99,6 +121,10 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
 #region Private Functions
 
+    private void LoadMatchmakingMenu()
+    {
+        PhotonNetwork.LoadLevel(MATCHMAKING_LEVEL_NAME);
+    }
 #endregion
 
 }

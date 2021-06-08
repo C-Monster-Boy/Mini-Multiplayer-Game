@@ -26,6 +26,8 @@ public class MessageBus : MonoBehaviour
 #region Message Data
 
     public SO_Message disconnected;
+    public SO_Message joinFailed;
+    public SO_Message createFailed;
 
 #endregion
 
@@ -89,7 +91,7 @@ public class MessageBus : MonoBehaviour
                 return;
             }
 
-            message.GetComponent<UI_Message>().ConfigureMesage(messageData.heading, messageData.content, messageData.messageAccentType, messageData.userInteractible);
+            message.GetComponent<UI_Message>().ConfigureMesage(messageData.heading, messageData.content, messageData.messageAccentType, messageData.routeToMainMenu);
 
             isDisplayingMessage = true;
         }
@@ -101,16 +103,19 @@ public class MessageBus : MonoBehaviour
         {
             case MessageType.Disconnected:
                 return disconnected;
+            case MessageType.JoinRoomFailed:
+                return joinFailed;
+            case MessageType.CreateRoomFailed:
+                return createFailed;
             default:
                 return null;
         }
     }
-
 
 #endregion
 }
 
 public enum MessageType
 {
-    None, Disconnected
+    None, Disconnected, JoinRoomFailed, CreateRoomFailed
 }

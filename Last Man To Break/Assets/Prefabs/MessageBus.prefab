@@ -45,5 +45,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesagePrefab: {fileID: 5835657982467406653, guid: f23c1d8b756f9c34d949ac89ac5e98e7, type: 3}
   isDisplayingMessage: 0
-  disconnected: {fileID: 11400000, guid: 7a7fcac74e38c504194238fec6074f83, type: 2}
-  connecting: {fileID: 11400000, guid: 96196c121f9cff8408f784afa11d3088, type: 2}
+  disconnected: {fileID: 11400000, guid: 441f3ebedf9a0dd47b4bee9027696970, type: 2}
+  joinFailed: {fileID: 11400000, guid: 7a7fcac74e38c504194238fec6074f83, type: 2}
+  createFailed: {fileID: 11400000, guid: d2b0d8ee12a04cc45911272ab65c1618, type: 2}

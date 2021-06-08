@@ -9,5 +9,5 @@ public class SO_Message : ScriptableObject {
 
     public MessageAccentType messageAccentType;
 
-    public bool userInteractible;
+    public bool routeToMainMenu;
 }

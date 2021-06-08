@@ -5,8 +5,9 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - mesagePrefab: {fileID: 5835657982467406653, guid: f23c1d8b756f9c34d949ac89ac5e98e7, type: 3}
-  - disconnected: {fileID: 11400000, guid: 7a7fcac74e38c504194238fec6074f83, type: 2}
-  - connecting: {fileID: 11400000, guid: 96196c121f9cff8408f784afa11d3088, type: 2}
+  - disconnected: {instanceID: 0}
+  - joinFailed: {instanceID: 0}
+  - createFailed: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

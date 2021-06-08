@@ -17,7 +17,8 @@ public class UI_Message : MonoBehaviour
     public Text headingText;
     public Text contentText;
     public Image accent;
-    public GameObject okButton;
+    public GameObject okButton_MainMenu;
+    public GameObject okButton_Normal;
 
 #endregion
 
@@ -46,16 +47,21 @@ public class UI_Message : MonoBehaviour
              PhotonNetwork.LoadLevel("MainMenu");
         }
        
+       CloseMessage();
+    }
+
+    public void CloseMessage()
+    {
         MessageBus.Instance.isDisplayingMessage = false;
         Destroy(this.gameObject, 0.3f);
     }
 
-    public void ConfigureMesage(string headingInput, string messageContentInput, MessageAccentType messageType = MessageAccentType.Trivial, bool userInteractible = true)
+    public void ConfigureMesage(string headingInput, string messageContentInput, MessageAccentType messageType = MessageAccentType.Trivial, bool routeToMainMenu = false)
     {
         SetMessageAccent(messageType);
         SetHeading(headingInput);
         SetContent(messageContentInput);
-        SetOkButton(userInteractible);
+        SetOkButton(routeToMainMenu);
     }
 
 #endregion
@@ -90,9 +96,10 @@ public class UI_Message : MonoBehaviour
         contentText.text = content;
     }
 
-    private void SetOkButton(bool setButton)
+    private void SetOkButton(bool routeToMainMenu)
     {
-        okButton.SetActive(setButton);
+        okButton_MainMenu.SetActive(routeToMainMenu);
+        okButton_Normal.SetActive(!routeToMainMenu);  
     }
 
 #endregion
