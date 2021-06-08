@@ -717,7 +717,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &391874452
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,8 +1257,9 @@ MonoBehaviour:
   joinGameDisablePanel: {fileID: 1272867406}
   createGameDisablePanel: {fileID: 1459918260}
   joinGameInput: {fileID: 997839675}
-  creatingMessage: {fileID: 0}
-  joiningMessage: {fileID: 0}
+  greenJoinButton: {fileID: 1308024189}
+  creatingMessage: {fileID: 1272581533}
+  joiningMessage: {fileID: 391874451}
   lobbyHandler: {fileID: 1824660718}
 --- !u!4 &781380636
 Transform:
