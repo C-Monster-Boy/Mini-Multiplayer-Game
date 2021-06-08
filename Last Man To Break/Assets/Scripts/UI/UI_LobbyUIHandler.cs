@@ -14,6 +14,11 @@ public class UI_LobbyUIHandler : MonoBehaviour
     public GameObject joinGameDisablePanel;
     public GameObject createGameDisablePanel;
     public InputField joinGameInput;
+    public Button greenJoinButton;
+
+    [Header("Message UI")]
+    public GameObject creatingMessage;
+    public GameObject joiningMessage;
 
 #endregion
 
@@ -34,8 +39,10 @@ public class UI_LobbyUIHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+           ShowNonInteractableMessage();
+           EnaleJoinButtonForNonEmptyRoomName();
     }
+
 #region Public Functions
 
     public void JoinGameMode()
@@ -63,7 +70,11 @@ public class UI_LobbyUIHandler : MonoBehaviour
 
     public void JoinRoom()
     {
-        lobbyHandler.JoinRoom(joinGameInput.text);
+        if(joinGameInput.text.Length > 0)
+        {
+            lobbyHandler.JoinRoom(joinGameInput.text);
+        }
+        
     }
 
     public void GoToMainMenu()
@@ -83,6 +94,43 @@ public class UI_LobbyUIHandler : MonoBehaviour
         
         createGameButton.interactable = true;
         createGameDisablePanel.SetActive(true);
+    }
+
+    private void EnaleJoinButtonForNonEmptyRoomName()
+    {
+        bool canJoinGame = joinGameInput.text.Length > 0 && !joinGameDisablePanel.activeSelf;
+        greenJoinButton.interactable = canJoinGame;
+        
+    }
+
+    private void ShowNonInteractableMessage()
+    {   
+
+        bool joiningMode = lobbyHandler.lobbyStatus == LobbyStatus.Joining;
+        bool creatingMode = lobbyHandler.lobbyStatus == LobbyStatus.Creating;
+        bool isJoinMessageActive = joiningMessage.activeSelf;
+        bool isCreateMessageActive = creatingMessage.activeSelf;
+
+        if( joiningMode && !isJoinMessageActive )
+        {
+            DisableAllMessageObjects();
+            joiningMessage.SetActive(true);
+        }
+        else if(creatingMode && !isCreateMessageActive )
+        {
+            DisableAllMessageObjects();
+            creatingMessage.SetActive(true);
+        }
+        else if((!joiningMode && !creatingMode) && (isJoinMessageActive || isCreateMessageActive))
+        {
+            DisableAllMessageObjects();
+        }
+    }
+
+    private void DisableAllMessageObjects()
+    {
+        joiningMessage.SetActive(false);
+        creatingMessage.SetActive(false);
     }
 
 #endregion

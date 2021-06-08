@@ -46,7 +46,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
-        lobbyStatus = LobbyStatus.Joining;
+        lobbyStatus = LobbyStatus.Creating;
 
         RoomOptions roomOptions  = new RoomOptions()
         {
@@ -132,5 +132,5 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
 public enum LobbyStatus
 {
-    Idle, Joining, Failed, Connected
+    Idle, Joining, Creating, Failed, Connected
 }
