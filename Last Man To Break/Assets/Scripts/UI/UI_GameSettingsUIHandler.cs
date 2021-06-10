@@ -7,10 +7,16 @@ using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class UI_GameSettingsUIHandler : MonoBehaviourPunCallbacks
+public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
 {
 
+    private const string LOBBY_SCENE_NAME = "Lobby";
+
+
 #region UI Components
+
+    [Header("UI Components")]
+    public Text roomNameText;
 
     [Header("Map UI")]
     public Button mapLeftButton;
@@ -28,17 +34,25 @@ public class UI_GameSettingsUIHandler : MonoBehaviourPunCallbacks
 #region Script References
 
     [Header("Script References")]
+    public MatchmakingHandler matchmakingHandler;
     public GameSettingsHandler gameSettingsHandler;
 
 #endregion
 
     private void Start() 
     {
+        SetRoomName();
         InitializeGameSettingsUI();
     }
 
 
 #region Public Functions
+    public void GoBackToLobby()
+    {
+        matchmakingHandler.LeaveRoom();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LOBBY_SCENE_NAME);
+    }
+
     public void DecreaseMapIndex()
     {
         gameSettingsHandler.DecrementSelectedMapIndex();
@@ -82,6 +96,11 @@ public class UI_GameSettingsUIHandler : MonoBehaviourPunCallbacks
 #endregion
 
 #region Private Functions
+
+    private void SetRoomName()
+    {
+        roomNameText.text = matchmakingHandler.GetRoomName();
+    }
 
      private void InitializeGameSettingsUI()
     {
