@@ -79,6 +79,14 @@ public class UI_GameSettingsUIHandler : MonoBehaviourPunCallbacks
         }
     }
 
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            Initialize_MasterClient();
+        }
+    }
+
 #endregion
 
 #region Private Functions
