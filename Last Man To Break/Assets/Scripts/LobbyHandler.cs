@@ -55,7 +55,10 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
         //Custom Room Properties
         Hashtable RoomCustomProps = new Hashtable();
-        RoomCustomProps.Add("map", 0); //map index has to be shared
+
+        //Custom Props
+        RoomCustomProps.Add(HashtableConstants.MAP_INDEX, 0); //map index has to be shared
+        RoomCustomProps.Add(HashtableConstants.ROUND_COUNT_INDEX, 0); //roun count inex to be sharrd
 
         roomOptions.CustomRoomProperties = RoomCustomProps;
 
