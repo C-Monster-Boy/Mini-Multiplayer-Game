@@ -25,7 +25,7 @@ public class GameSettingsHandler : MonoBehaviour
 
     public void DecrementSelectedMapIndex()
     {
-        currentMapSelectedIndex = modulus((currentMapSelectedIndex - 1), mapList.Length);
+        currentMapSelectedIndex = Utilities.Modulus((currentMapSelectedIndex - 1), mapList.Length);
         UpdateCustomProperites_MapIndex();
         
     }
@@ -38,7 +38,7 @@ public class GameSettingsHandler : MonoBehaviour
 
      public void DecrementRoundCountIndex()
     {
-        currentRoundCountIndex = modulus((currentRoundCountIndex - 1) , roundCountList.Length);
+        currentRoundCountIndex = Utilities.Modulus((currentRoundCountIndex - 1) , roundCountList.Length);
         UpdateCustomProperites_RoundCount();
     }
 
@@ -72,15 +72,6 @@ public class GameSettingsHandler : MonoBehaviour
         {
             hash.Add(key, value);
         }
-    }
-
-    private int modulus(int a, int b) //for a%b
-    {
-        if(a<0)
-            //return (Mathf.Abs(a * b) + a) % b;
-            return ((a % b) + b) % b;
-        
-        return a%b;
     }
 
 #endregion
