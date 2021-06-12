@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using Photon.Pun;
 using Photon.Realtime;
+using ExitGames.Client.Photon;
 
 
 public class Launcher : MonoBehaviourPunCallbacks
@@ -22,7 +24,7 @@ public class Launcher : MonoBehaviourPunCallbacks
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
         if(PhotonNetwork.IsConnected)
         {
             connectionState = ConnectionState.Connected;
@@ -49,6 +51,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             connectionState = ConnectionState.Connecting;
             PhotonNetwork.ConnectUsingSettings();
             PhotonNetwork.GameVersion = gameVersion;   
+            RegisterCustomTypes();
         }
     }
 
@@ -90,7 +93,10 @@ public class Launcher : MonoBehaviourPunCallbacks
 
 #region Private Functions
 
-
+    private void RegisterCustomTypes()
+    {
+        PhotonPeer.RegisterType(typeof(PlayerReadyList), (byte)'M', PlayerReadyList.Serialize, PlayerReadyList.Deserialize);
+    }
 #endregion
 
 }

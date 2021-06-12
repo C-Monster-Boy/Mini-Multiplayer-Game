@@ -8,13 +8,12 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MatchmakingHandler : MonoBehaviourPunCallbacks
 {
-
-private void Awake() {
-    if(PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
-    {
-        PhotonNetwork.AutomaticallySyncScene = true;
+    private void Awake() {
+        if(PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.AutomaticallySyncScene = true;
+        }
     }
-}
 
 #region PUN Callbacks
     public override void OnDisconnected(DisconnectCause cause) 

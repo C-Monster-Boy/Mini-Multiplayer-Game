@@ -60,7 +60,7 @@ public class UI_PlayerSettingsUIHandler : MonoBehaviour
 
     private void SetCurrentPlayerUI()
     {
-        int index = playerSettingsHandler.yourCharacterIndex;
+        int index = playerSettingsHandler.myCharacterIndex;
         SO_Character myCharacter = playerSettingsHandler.characterList[index];
 
         SetPlayerCharacterUI(myCharacter);
@@ -79,10 +79,10 @@ public class UI_PlayerSettingsUIHandler : MonoBehaviour
         weaponImage.sprite = weapon.weaponImage;
 
         damageCount.text = weapon.damage.ToString();
-        damageFill.fillAmount = weapon.damage / MAX_DAMAGE_VALUE * 1f;
+        damageFill.fillAmount = weapon.damage / (MAX_DAMAGE_VALUE * 1f);
 
         capacityCount.text = weapon.capacity.ToString();
-        capacityFill.fillAmount = weapon.capacity / MAX_CAPACITY_VALUE * 1f;
+        capacityFill.fillAmount = weapon.capacity / (MAX_CAPACITY_VALUE * 1f);
     }
 
     private void SetDeployableUI(SO_Deployable deployable)
