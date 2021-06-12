@@ -28,6 +28,10 @@ public class PlayerJoinHandler : MonoBehaviourPunCallbacks
 
 #region Public Functions
 
+  public bool AreAllPlayersInReadyState()
+  {
+      return playerReadyList.AllPlayersReady();
+  }
   public void SetReadyState(bool isReady)
   {
       if(PhotonNetwork.IsMasterClient)

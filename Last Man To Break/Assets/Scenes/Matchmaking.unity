@@ -2075,7 +2075,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomNameText: {fileID: 899348990}
+  playButton: {fileID: 7490344186609630322}
   matchmakingHandler: {fileID: 715193896}
+  playerJoinHandler: {fileID: 715193900}
 --- !u!114 &673128471
 MonoBehaviour:
   m_ObjectHideFlags: 0

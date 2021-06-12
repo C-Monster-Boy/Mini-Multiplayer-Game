@@ -106,6 +106,18 @@ public class PlayerReadyList
         Debug.LogError("Player not found");
         return false;
     }
+
+    public bool AllPlayersReady()
+    {
+        foreach(PlayerReadyStatus p in playerList)
+        {
+            if(!p.isReady)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 [System.Serializable]
 public struct PlayerReadyStatus
