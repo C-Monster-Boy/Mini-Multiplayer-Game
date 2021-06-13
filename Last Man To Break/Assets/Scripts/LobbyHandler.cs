@@ -27,7 +27,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        
+        PhotonNetwork.LeaveLobby();
     }
 
     // Update is called once per frame
@@ -45,7 +45,12 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     }
 
     public void CreateRoom()
-    {
+    {      
+        if(!PhotonNetwork.IsConnectedAndReady)
+        {
+            MessageBus.Instance.AddMessageToQueue(MessageType.CreateRoomFailed);
+            
+        }
         lobbyStatus = LobbyStatus.Creating;
 
         RoomOptions roomOptions  = new RoomOptions()

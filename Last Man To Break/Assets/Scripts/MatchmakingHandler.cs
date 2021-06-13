@@ -11,8 +11,10 @@ public class MatchmakingHandler : MonoBehaviourPunCallbacks
     private void Awake() {
         if(PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
         {
-            PhotonNetwork.AutomaticallySyncScene = true;
+            //PhotonNetwork.AutomaticallySyncScene = true;
         }
+
+        PhotonNetwork.AutomaticallySyncScene = true;
     }
 
 #region PUN Callbacks
@@ -40,6 +42,11 @@ public class MatchmakingHandler : MonoBehaviourPunCallbacks
     public string GetRoomName()
     {
         return PhotonNetwork.CurrentRoom.Name;
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        PhotonNetwork.LoadLevel(sceneName);
     }
 
 #endregion

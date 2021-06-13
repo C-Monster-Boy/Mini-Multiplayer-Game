@@ -5,168 +5,77 @@ using UnityEngine.UI;
 
 using Photon.Pun;
 using Photon.Realtime;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
-public class UI_GameSettingsUIHandler : MonoBehaviourPunCallbacks
+public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
 {
+     private const string LOBBY_SCENE_NAME = "Lobby";
 
-#region UI Components
 
-    [Header("Map UI")]
-    public Button mapLeftButton;
-    public Button mapRightButton;
-    public Image mapImage;
-    public Text mapName;
+    [Header("UI Components")]
+    public Text roomNameText;
+    public Button playButton;
 
-    [Header("Round Count UI")]
-    public Button roundCountLeftButton;
-    public Button roundCountRightButton;
-    public Text roundCountText;
 
-#endregion
-
-#region Script References
-
-    [Header("Script References")]
+    [Header("Script Reference")]
+    public MatchmakingHandler matchmakingHandler;
+    public PlayerJoinHandler playerJoinHandler;
     public GameSettingsHandler gameSettingsHandler;
 
-#endregion
-
-    private void Start() 
+    // Start is called before the first frame update
+    void Start()
     {
-        InitializeGameSettingsUI();
+        SetRoomName();
+        SetPlayButton();
     }
 
+    private void Update() 
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            playButton.interactable = playerJoinHandler.AreAllPlayersInReadyState() && PhotonNetwork.IsConnected;
+        }
+    }
 
 #region Public Functions
-    public void DecreaseMapIndex()
+
+    public void GoBackToLobby()
     {
-        gameSettingsHandler.DecrementSelectedMapIndex();
-        ChangeGameSettingsButtonStatus(false);
+        matchmakingHandler.LeaveRoom();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LOBBY_SCENE_NAME);
     }
 
-    public void IncreaseMapIndex()
-    {
-        gameSettingsHandler.IncrementSelectedMapIndex();
-        ChangeGameSettingsButtonStatus(false);
-    }
-
-    public void IncreaseRoundCount()
-    {
-        gameSettingsHandler.IncrementRoundCountIndex();
-        ChangeGameSettingsButtonStatus(false);
-    }
-
-    public void DecreaseRoundCount()
-    {
-        gameSettingsHandler.DecrementRoundCountIndex();
-        ChangeGameSettingsButtonStatus(false);
+    public void LoadGameScene()
+    {   
+        matchmakingHandler.LoadScene(gameSettingsHandler.mapList[gameSettingsHandler.currentMapSelectedIndex].sceneToLoadName);
     }
 
 #endregion
 
 #region PUN Callbacks
 
-    public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
-    {
-        //Change Map 
-        DisplayMap(propertiesThatChanged);
-        DisplayRoundCount();
-
-        if(PhotonNetwork.IsMasterClient)
-        {
-            ChangeGameSettingsButtonStatus(true);
-        }
-    }
-
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        if(PhotonNetwork.IsMasterClient)
-        {
-            Initialize_MasterClient();
-        }
+       SetPlayButton();
     }
 
 #endregion
 
 #region Private Functions
 
-     private void InitializeGameSettingsUI()
+    private void SetRoomName()
+    {
+        roomNameText.text = matchmakingHandler.GetRoomName();
+    }
+
+    private void SetPlayButton()
     {
         if(PhotonNetwork.IsMasterClient)
         {
-            Initialize_MasterClient();
+            playButton.gameObject.SetActive(true);
         }
         else
         {
-            Initialize_NonMasterClient();
+            playButton.gameObject.SetActive(false);
         }
-        DisplayMap();
-        DisplayRoundCount();
-    }
-
-    private void Initialize_NonMasterClient()
-    {
-        mapLeftButton.gameObject.SetActive(false);
-        mapRightButton.gameObject.SetActive(false);
-
-        roundCountLeftButton.gameObject.SetActive(false);
-        roundCountRightButton.gameObject.SetActive(false);
-    }
-
-    private void Initialize_MasterClient()
-    {
-        mapLeftButton.gameObject.SetActive(true);
-        mapRightButton.gameObject.SetActive(true);
-
-        roundCountLeftButton.gameObject.SetActive(true);
-        roundCountRightButton.gameObject.SetActive(true);
-    }
-
-    private void ChangeGameSettingsButtonStatus(bool enabled)
-    {
-        mapLeftButton.interactable = enabled;
-        mapRightButton.interactable = enabled;
-        
-        roundCountLeftButton.interactable = enabled;
-        roundCountRightButton.interactable = enabled;
-
-    }
-
-    private void DisplayMap(Hashtable hash = null)
-    {   
-        if(hash == null)
-        {
-            hash = PhotonNetwork.CurrentRoom.CustomProperties;
-        }
-
-        int mapIndex = 0;
-
-        if(hash.ContainsKey(HashtableConstants.MAP_INDEX))
-        {
-            mapIndex = (int)hash[HashtableConstants.MAP_INDEX];
-        }
-
-        SO_Map currMap = gameSettingsHandler.mapList[mapIndex];
-        mapImage.sprite = currMap.mapImage;
-        mapName.text = currMap.mapName;
-    }
-
-    private void DisplayRoundCount(Hashtable hash = null)
-    {
-        if(hash == null)
-        {
-            hash = PhotonNetwork.CurrentRoom.CustomProperties;
-        }
-
-        int roundIndex = 0;
-
-        if(hash.ContainsKey(HashtableConstants.ROUND_COUNT_INDEX))
-        {
-            roundIndex = (int)hash[HashtableConstants.ROUND_COUNT_INDEX];
-        }
-
-        roundCountText.text = ""+ gameSettingsHandler.roundCountList[roundIndex];
     }
 
 #endregion
