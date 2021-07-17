@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -8,6 +9,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class MatchmakingHandler : MonoBehaviourPunCallbacks
 {
+    private const string LOBBY_SCENE_NAME = "Lobby";
+    
     private void Awake() {
         if(PhotonNetwork.IsConnected && !PhotonNetwork.IsMasterClient)
         {
@@ -29,7 +32,7 @@ public class MatchmakingHandler : MonoBehaviourPunCallbacks
 
     public void LeaveRoom()
     {
-        PhotonNetwork.LeaveRoom();
+        StartCoroutine(LeaveRoomAndLoad());
     }
 
     public void StartGame()
@@ -48,6 +51,19 @@ public class MatchmakingHandler : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LoadLevel(sceneName);
     }
+
+#endregion
+
+#region Coroutines
+
+IEnumerator LeaveRoomAndLoad()
+{
+    PhotonNetwork.LeaveRoom();
+    while(PhotonNetwork.InRoom)
+        yield return null;
+    
+    SceneManager.LoadScene(LOBBY_SCENE_NAME);
+}
 
 #endregion
 

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abadfeb71725a74ebb8f9b53d9cca4d, type: 3}
   m_Name: Map 1
   m_EditorClassIdentifier: 
-  mapName: Bartlet University
+  mapName: Map 1
   mapImage: {fileID: 21300000, guid: b5c62e39148be514f86252bdb4ae3f13, type: 3}
   sceneToLoadName: Map1

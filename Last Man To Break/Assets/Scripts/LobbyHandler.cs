@@ -27,7 +27,11 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        PhotonNetwork.LeaveLobby();
+        if(PhotonNetwork.InRoom)
+        {   
+            PhotonNetwork.LeaveRoom();
+        }
+        
     }
 
     // Update is called once per frame
@@ -40,12 +44,22 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
 
     public void JoinRoom(string roomName)
     {
+        if(LeaveRoomIfAlreadyInOne())
+        {
+            return;
+        }
+
         lobbyStatus = LobbyStatus.Joining;
         PhotonNetwork.JoinRoom(roomName);
     }
 
     public void CreateRoom()
     {      
+        if(LeaveRoomIfAlreadyInOne())
+        {
+            return;
+        }
+
         if(!PhotonNetwork.IsConnectedAndReady)
         {
             MessageBus.Instance.AddMessageToQueue(MessageType.CreateRoomFailed);
@@ -89,7 +103,7 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
         
         Debug.Log("Room Created");
 
-        LoadMatchmakingMenu();
+        //LoadMatchmakingMenu();
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)
@@ -132,6 +146,18 @@ public class LobbyHandler : MonoBehaviourPunCallbacks
     private void LoadMatchmakingMenu()
     {
         PhotonNetwork.LoadLevel(MATCHMAKING_LEVEL_NAME);
+    }
+
+    private bool LeaveRoomIfAlreadyInOne()
+    {
+        if(PhotonNetwork.InRoom)
+        {
+            Debug.Log("Leaving Room as already open") ;
+            PhotonNetwork.LeaveRoom();
+            return true;
+        }
+
+        return false;
     }
 #endregion
 

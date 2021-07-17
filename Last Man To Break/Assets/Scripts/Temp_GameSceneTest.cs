@@ -36,12 +36,13 @@ public class Temp_GameSceneTest : MonoBehaviourPunCallbacks
     public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
-        PhotonNetwork.LoadLevel("Lobby");
+        //PhotonNetwork.LoadLevel("Lobby");
     }
 
     //PUN Callbacks
-    public override void OnPlayerLeftRoom(Player otherPlayer)
+    public override void OnLeftRoom()
     {
+        PhotonNetwork.LoadLevel("Lobby");
     }
 
     //Private 

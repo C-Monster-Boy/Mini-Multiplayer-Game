@@ -7,8 +7,7 @@ using Photon.Pun;
 using Photon.Realtime;
 public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
 {
-     private const string LOBBY_SCENE_NAME = "Lobby";
-
+    private const string LOBBY_SCENE_NAME = "Lobby";
 
     [Header("UI Components")]
     public Text roomNameText;
@@ -40,7 +39,7 @@ public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
     public void GoBackToLobby()
     {
         matchmakingHandler.LeaveRoom();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(LOBBY_SCENE_NAME);
+        
     }
 
     public void LoadGameScene()
@@ -55,6 +54,12 @@ public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
        SetPlayButton();
+    }
+
+    public override void OnLeftRoom()
+    {
+        // UnityEngine.SceneManagement.SceneManager.LoadScene(LOBBY_SCENE_NAME);
+       // matchmakingHandler.LoadScene(LOBBY_SCENE_NAME);
     }
 
 #endregion

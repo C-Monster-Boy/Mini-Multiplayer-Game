@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abadfeb71725a74ebb8f9b53d9cca4d, type: 3}
   m_Name: Map 3
   m_EditorClassIdentifier: 
-  mapName: Favels
+  mapName: Map 3
   mapImage: {fileID: 21300000, guid: 5d5c9f80647804146a0319bf088b7871, type: 3}
   sceneToLoadName: Map3

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abadfeb71725a74ebb8f9b53d9cca4d, type: 3}
   m_Name: Map 2
   m_EditorClassIdentifier: 
-  mapName: Bank
+  mapName: Map 2
   mapImage: {fileID: 21300000, guid: 2c1c7cdd7e9f7cd428f2f0c9259077a6, type: 3}
   sceneToLoadName: Map2
