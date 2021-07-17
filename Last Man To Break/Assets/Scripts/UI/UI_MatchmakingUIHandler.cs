@@ -42,9 +42,14 @@ public class UI_MatchmakingUIHandler : MonoBehaviourPunCallbacks
         
     }
 
-    public void LoadGameScene()
+    public void StartGame()
     {   
+        //Start game when lobby is full
+        //Scene loaded is based on settings
+        //Player loaded is based on settings
         matchmakingHandler.LoadScene(gameSettingsHandler.mapList[gameSettingsHandler.currentMapSelectedIndex].sceneToLoadName);
+        PhotonNetwork.CurrentRoom.IsOpen = false;
+        PhotonNetwork.CurrentRoom.IsVisible = false;
     }
 
 #endregion
